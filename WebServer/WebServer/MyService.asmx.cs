@@ -20,7 +20,7 @@ namespace WebServer
     public class MyService : System.Web.Services.WebService
     {
 
-        private void Init()
+        public void Init()
         {
         }
 

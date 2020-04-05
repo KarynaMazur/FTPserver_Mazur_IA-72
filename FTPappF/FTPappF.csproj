@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builder\UserBuilder.cs" />
     <Compile Include="FTPManager.cs" />
     <Compile Include="State\ActiveState.cs" />
     <Compile Include="Memento\CareTaker.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\UnknownCommandException.cs" />
+    <Compile Include="Builder\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
