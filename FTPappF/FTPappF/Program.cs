@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebServer;
+using System.Web.Services;
 
 namespace FTPappF
 {
@@ -14,16 +14,10 @@ namespace FTPappF
     {
         static void Main(string[] args)
         {
-            var myService = new MyService();
-            if (!myService.Ping())
-                return;
-
-            User user = Authorization();
-
-            Console.WriteLine("Hi, {0}! You can {1}", user.Name, user.Rights);
+            localhost.MyService local = new localhost.MyService();
 
             string command;
-            FTPManager fTPManager = new FTPManager(user);
+            FTPManager fTPManager = new FTPManager(local);
 
             while (true)
             {
@@ -48,14 +42,5 @@ namespace FTPappF
             }
         }
 
-        private static User Authorization()
-        {
-            Console.WriteLine("Your name: ");
-            string name = Console.ReadLine();
-            if (name == "admin")
-                return new UserBuilder().SetName(name).CreateAdmin().Build();
-            else
-                return new UserBuilder().SetName(name).SetRights("r").Build();
-        }
     }
 }
