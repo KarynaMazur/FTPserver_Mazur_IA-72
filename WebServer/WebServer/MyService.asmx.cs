@@ -31,7 +31,7 @@ namespace WebServer
         public string Send(string command, string rights)
         {
             string response;
-            DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory);
+            DirectoryInfo di = new DirectoryInfo(@"C:\Users\" + Environment.UserName + @"\Desktop\");
             string[] temp = command.Split();
             switch (temp[0].ToUpper())
             {

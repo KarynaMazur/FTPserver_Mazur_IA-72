@@ -1,4 +1,5 @@
-﻿using FTPappF.Builder;
+﻿using FTPapp.MementoFolder;
+using FTPappF.Builder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,20 @@ namespace FTPappF
         {
             return new UserBuilder();
         }
+
+        public Memento CreateMemento()
+        {
+            return new Memento(this);
+        }
+
+        public void SetMemento(User user)
+        {
+            this.Name = user.Name;
+            this.Login = user.Login;
+            this.Password = user.Password;
+            this.Rights = user.Rights;
+        }
+
+
     }
 }

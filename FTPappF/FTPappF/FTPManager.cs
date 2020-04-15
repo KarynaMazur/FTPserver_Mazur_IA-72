@@ -1,5 +1,5 @@
 ﻿using FTPapp.Exceptions;
-using FTPapp.Memento;
+using FTPapp.MementoFolder;
 using FTPappF;
 using FTPappF.Builder;
 using System;
@@ -21,14 +21,14 @@ namespace FTPapp
             _myService = myService;
             _careTaker = new CareTaker();
         }
-        public void ChangeTempUser()
+        private void ChangeTempUser() //change public => private (memento)
         {
-            _careTaker.History.Push(new Memento.Memento(_tempUser)); //memento
+            _careTaker.SaveMemento(_tempUser.CreateMemento()); //memento
             _tempUser = Authorization();
         }
-        public void GetPreviousUser()
+        private void GetPreviousUser() //change public => private (memento)
         {
-            _tempUser = _careTaker.History.Pop().ObjToSave as User;  //memento
+            _tempUser.SetMemento(_careTaker.GetMemento());  //memento
         }
         public string ExecuteCommand(string command)
         {

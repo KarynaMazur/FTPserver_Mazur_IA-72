@@ -1,14 +1,15 @@
-﻿using System;
+﻿using FTPappF;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FTPapp.Memento
+namespace FTPapp.MementoFolder
 {
     public class Memento
     {
-        public object ObjToSave; //что сохранять?
+        public User ObjToSave; //что сохранять?
 
-        public Memento(object vmc)
+        public Memento(User vmc)
         {
             this.ObjToSave = vmc;
         }
