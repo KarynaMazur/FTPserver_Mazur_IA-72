@@ -14,10 +14,8 @@ namespace FTPappF
     {
         static void Main(string[] args)
         {
-            localhost.MyService local = new localhost.MyService();
-
             string command;
-            FTPManager fTPManager = new FTPManager(local);
+            FTPManager fTPManager = new FTPManager();
 
             while (true)
             {

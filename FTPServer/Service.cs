@@ -1,33 +1,14 @@
-﻿using FTPapp;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SQLite;
+﻿using System;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Services;
 
-namespace WebServer
+// Сервис.
+
+namespace FTPServer
 {
-    /// <summary>
-    /// Summary description for MyService
-    /// </summary>
-    [WebService(Namespace = "http://tempuri.org/")]
-    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    [System.ComponentModel.ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
-    // [System.Web.Script.Services.ScriptService]
-    public class MyService : System.Web.Services.WebService
+    class Service : IContract
     {
         private IState State { get; set; }
-
-        public void Init()
-        {
-        }
- 
-        [WebMethod]
         public string Send(string command, string rights)
         {
             string response;

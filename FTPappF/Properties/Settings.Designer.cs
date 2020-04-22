@@ -22,15 +22,5 @@ namespace FTPappF.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:52339/MyService.asmx")]
-        public string FTPappF_localhost_MyService {
-            get {
-                return ((string)(this["FTPappF_localhost_MyService"]));
-            }
-        }
     }
 }
