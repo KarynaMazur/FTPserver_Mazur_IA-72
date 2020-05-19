@@ -48,7 +48,7 @@
   <ItemGroup>
     <Compile Include="Builder\UserBuilder.cs" />
     <Compile Include="FTPManager.cs" />
-    <Compile Include="FTPManagerAbstract.cs" />
+    <Compile Include="AbstractManager.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -63,8 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\UnknownCommandException.cs" />
     <Compile Include="Builder\User.cs" />
-    <Compile Include="WCFserver\IContract.cs" />
-    <Compile Include="WCFserver\MyService.cs" />
+    <Compile Include="MyService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

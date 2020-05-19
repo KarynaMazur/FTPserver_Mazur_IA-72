@@ -10,7 +10,7 @@ using System.Text;
 
 namespace FTPapp
 {
-    public class FTPManager : FTPManagerAbstract
+    public class FTPManager : AbstractManager
     {
         private CareTaker _careTaker;
         public FTPManager()

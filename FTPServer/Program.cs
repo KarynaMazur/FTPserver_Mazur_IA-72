@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 using System.ServiceModel;
 using System.Text;
 
@@ -10,29 +12,65 @@ namespace FTPServer
 
         static void Main(string[] args)
         {
-            Console.Title = "SERVER";
+            // Устанавливаем для сокета локальную конечную точку
+            IPHostEntry ipHost = Dns.GetHostEntry("localhost");
+            IPAddress ipAddr = ipHost.AddressList[0];
+            IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, 11000);
 
-            Uri address = new Uri("http://localhost:4000/IContract");  // адреса
+            Service service = new Service();
 
-            BasicHttpBinding binding = new BasicHttpBinding();      //  привязка
+            // Создаем сокет Tcp/Ip
+            Socket sListener = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
-            Type contract = typeof(IContract);                 // Указание контракта.       
+            // Назначаем сокет локальной конечной точке и слушаем входящие сокеты
+            try
+            {
+                sListener.Bind(ipEndPoint);
+                sListener.Listen(10);
 
-            var host = new ServiceHost(typeof(Service)); // Создание провайдера Хостинга с указанием Сервиса.
+                // Начинаем слушать соединения
+                while (true)
+                {
+                    Console.WriteLine("Ожидаем соединение через порт {0}", ipEndPoint);
 
-            
-            host.AddServiceEndpoint(contract, binding, address);
+                    // Программа приостанавливается, ожидая входящее соединение
+                    Socket handler = sListener.Accept();
+                    string data = null;
 
-            
-            host.Open();
+                    // Мы дождались клиента, пытающегося с нами соединиться
 
+                    byte[] bytes = new byte[1024];
+                    int bytesRec = handler.Receive(bytes);
 
-            Console.WriteLine("Приложение готово к приему сообщений.");
-            Console.ReadKey();
+                    data += Encoding.UTF8.GetString(bytes, 0, bytesRec);
 
+                    // Показываем данные на консоли
+                    Console.Write("Полученный текст: " + data + "\n\n");
 
-            // Завершение ожидания прихода сообщений.
-            host.Close();
+                    // Отправляем ответ клиенту\
+                    string reply = service.Send(data);
+                    byte[] msg = Encoding.UTF8.GetBytes(reply);
+                    handler.Send(msg);
+
+                    if (data.IndexOf("<TheEnd>") > -1)
+                    {
+                        Console.WriteLine("Сервер завершил соединение с клиентом.");
+                        break;
+                    }
+
+                    handler.Shutdown(SocketShutdown.Both);
+                    handler.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                Console.ReadLine();
+            }
+
         }
     }
 }

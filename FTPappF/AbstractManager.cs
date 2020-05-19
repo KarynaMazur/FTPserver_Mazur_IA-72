@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace FTPappF
 {
-    public abstract class FTPManagerAbstract
+    public abstract class AbstractManager
     {
         public User _tempUser;
         private MyService _myService;
-        public FTPManagerAbstract()
+        public AbstractManager()
         {
             _myService = new MyService();
         }
@@ -29,7 +29,7 @@ namespace FTPappF
                 ChangeTempUser();
                 return "User changed to " + _tempUser.Name;
             }
-            return _myService.Send(command, _tempUser.Rights);
+            return _myService.Send(command + "%" + _tempUser.Rights);
         }
 
         public abstract void GetPreviousUser(); // методы, которые должны быть 

@@ -6,19 +6,20 @@ using System.Text;
 
 namespace FTPServer
 {
-    class Service : IContract
+    class Service
     {
         private IState State { get; set; }
-        public string Send(string command, string rights)
+        public string Send(string command)
         {
+            string[] data = command.Split('%');
             string response;
             DirectoryInfo di = new DirectoryInfo(@"C:\Users\" + Environment.UserName + @"\Desktop\");
-            string[] temp = command.Split();
+            string[] temp = data[0].Split();
             switch (temp[0].ToUpper())
             {
                 case "MKD":
-                    if (!rights.Contains("w"))
-                        response = "You have not enough permissions. You can " + rights;
+                    if (!data[1].Contains("w"))
+                        response = "You have not enough permissions. You can " + data[1];
                     else
                     {
                         di.CreateSubdirectory(temp[1]);//command.Remove(0, 3));
