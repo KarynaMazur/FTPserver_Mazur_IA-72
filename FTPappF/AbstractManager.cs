@@ -1,4 +1,5 @@
 ﻿using FTPappF.Builder;
+using FTPappF.Visitor;
 using FTPappF.WCFserver;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace FTPappF
         private MyService _myService;
         public AbstractManager()
         {
-            _myService = new MyService();
+            _myService = new MyService(new MakeLog());
         }
 
         public string ExecuteCommand(string command) // template method - реализован в абстрактном классе, 

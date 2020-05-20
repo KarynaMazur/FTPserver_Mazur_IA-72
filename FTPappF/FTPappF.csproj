@@ -64,6 +64,8 @@
     <Compile Include="Exceptions\UnknownCommandException.cs" />
     <Compile Include="Builder\User.cs" />
     <Compile Include="MyService.cs" />
+    <Compile Include="Visitor\IVisitor.cs" />
+    <Compile Include="Visitor\MakeLog.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FTPapp.Exceptions;
+using FTPappF.Visitor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,11 +13,23 @@ namespace FTPappF.WCFserver
 {
     public class MyService
     {
+        private MakeLog _makeLog;
+        public MyService(MakeLog makeLog)
+        {
+            _makeLog = makeLog;
+        }
         public string Send(string command)
         {
             try
             {
-                return SendMessageFromSocket(11000, command);
+                string answer = SendMessageFromSocket(11000, command);
+                if (answer == "unknown command")
+                {
+                    var ex = new UnknownCommandException(answer);
+                    _makeLog.VisitUnknownCommandException(ex);
+                    throw ex;
+                }
+                return answer;
             }
             catch (Exception ex)
             {
@@ -25,12 +39,12 @@ namespace FTPappF.WCFserver
 
         static string SendMessageFromSocket(int port, string command)
         {
-            // Буфер для входящих данных
+            
             byte[] bytes = new byte[1024];
 
-            // Соединяемся с удаленным устройством
+            
 
-            // Устанавливаем удаленную точку для сокета
+            
             IPHostEntry ipHost = Dns.GetHostEntry("localhost");
             IPAddress ipAddr = ipHost.AddressList[0];
             IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, port);
@@ -45,15 +59,15 @@ namespace FTPappF.WCFserver
             Console.WriteLine("Сокет соединяется с {0} ", sender.RemoteEndPoint.ToString());
             byte[] msg = Encoding.UTF8.GetBytes(message);
 
-            // Отправляем данные через сокет
+            
             int bytesSent = sender.Send(msg);
 
-            // Получаем ответ от сервера
+            // ответ от сервера
             int bytesRec = sender.Receive(bytes);
 
-            Console.WriteLine("\nОтвет от сервера: {0}\n\n", Encoding.UTF8.GetString(bytes, 0, bytesRec));
+            //Console.WriteLine("\nОтвет от сервера: {0}\n\n", Encoding.UTF8.GetString(bytes, 0, bytesRec));
             
-            // Освобождаем сокет
+           
             sender.Shutdown(SocketShutdown.Both);
             sender.Close();
 

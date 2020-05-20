@@ -1,6 +1,7 @@
 ﻿using FTPapp;
 using FTPapp.Exceptions;
 using FTPappF.Builder;
+using FTPappF.Visitor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,8 @@ namespace FTPappF
         static void Main(string[] args)
         {
             string command;
-            FTPManager fTPManager = new FTPManager();
+            MakeLog makeLog = new MakeLog();
+            FTPManager fTPManager = new FTPManager(makeLog);
 
             while (true)
             {
@@ -29,6 +31,7 @@ namespace FTPappF
                 }
                 catch (UnknownCommandException ex)
                 {
+                    makeLog.VisitUnknownCommandException(ex); //visitor
                     Console.WriteLine(ex.Message);
                     Console.WriteLine();
                 }
